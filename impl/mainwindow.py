@@ -11,16 +11,12 @@ from .node_item import NodeItem
 from .sidebar import Sidebar
 from .topbar import Topbar
 from .theme import (COLORS, qc)
-from .controller import Controller
 from .canvascontroller import CanvasController
 
 # ─── Fenêtre principale ───────────────────────────────────────────────────────
 class MainWindow(QMainWindow):
     def __init__(self):
         super().__init__()
-
-        self.controller = Controller(self)
-        CanvasController().setMainWindow(self)
 
         self.setWindowTitle("Visual Flow IDE")
         self.resize(1280, 780)
@@ -57,6 +53,8 @@ class MainWindow(QMainWindow):
 
         self._spawn_counter = 0
         QTimer.singleShot(100, self._demo_nodes)
+        
+        CanvasController().setMainWindow(self, self._scene)
 
     # ── Gestion des demandes de la sidebar ───────────────────────────────────
     def _handle_request(self, label, inputs, outputs):
@@ -66,10 +64,10 @@ class MainWindow(QMainWindow):
                 if isinstance(item, NodeItem):
                     self._scene.remove_node(item)
             return
-        if label == "__run__":
+        # if label == "__run__":
             # self._show_run_dialog()
-            self.controller._show_run_dialog(self._scene)
-            return
+            # self.controller._show_run_dialog(self._scene)
+            # return
         # Offset en cascade
         cx = self._view.mapToScene(
             self._view.viewport().rect().center()).x()

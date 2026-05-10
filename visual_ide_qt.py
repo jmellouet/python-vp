@@ -18,6 +18,8 @@ if __name__ == "__main__":
     app = QApplication(sys.argv)
     app.setStyle("Fusion")
 
+    
+
     # Palette sombre globale
     pal = QPalette()
     pal.setColor(QPalette.ColorRole.Window,      QColor(COLORS["bg_main"]))
